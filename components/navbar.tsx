@@ -64,10 +64,10 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-xs">
+    <header className="sticky top-0 z-40 w-full pt-[env(safe-area-inset-top)] border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo & Name */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 min-w-0">
           <Link href="/" className="flex items-center gap-2 group transition-all">
             <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
               <GraduationCap className="h-5 w-5" />
@@ -76,7 +76,7 @@ export function Navbar() {
               <span className="font-bold text-lg leading-tight tracking-tight text-foreground flex items-center gap-1.5">
                 Smart<span className="text-blue-600 dark:text-blue-400">LMS</span>
               </span>
-              <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono">
+              <span className="hidden min-[400px]:block text-[10px] text-muted-foreground uppercase tracking-widest font-mono">
                 Azure Media & Supabase
               </span>
             </div>
@@ -124,7 +124,7 @@ export function Navbar() {
         </div>
 
         {/* Right Section: Mode Indicator, Quick Switcher & User Profile */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {/* Mock Mode / Supabase badge */}
           {isMockMode ? (
             <div
@@ -157,7 +157,7 @@ export function Navbar() {
             </button>
 
             {switcherOpen && (
-              <div className="absolute right-0 mt-2 w-48 rounded-xl border border-border bg-popover p-1.5 text-popover-foreground shadow-lg z-50">
+              <div className="absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-popover p-1.5 text-popover-foreground shadow-lg z-50">
                 <div className="px-2 py-1 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                   Test Personas
                 </div>
@@ -212,7 +212,7 @@ export function Navbar() {
               </button>
 
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-xl z-50">
+                <div className="absolute right-0 mt-2 w-64 max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-xl z-50">
                   <div className="p-2 border-b border-border/50">
                     <p className="text-sm font-semibold">{profile.full_name}</p>
                     <p className="text-xs text-muted-foreground truncate">{profile.email || user?.email || "No email"}</p>

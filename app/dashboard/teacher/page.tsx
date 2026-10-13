@@ -20,6 +20,7 @@ import {
   Video,
   UserPlus,
 } from "lucide-react";
+import { VideoUpload } from "@/components/video-upload";
 
 export default function TeacherDashboardPage() {
   const { profile, isMockMode } = useAuth();
@@ -98,7 +99,7 @@ export default function TeacherDashboardPage() {
       setEditingCourseId(null);
       setCourseTitle("");
       setCourseDesc("");
-      setCourseVideoUrl("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4");
+      setCourseVideoUrl("");
     }
     setCourseModalOpen(true);
   };
@@ -275,10 +276,10 @@ export default function TeacherDashboardPage() {
         )}
 
         {/* Tab Switcher */}
-        <div className="flex border-b border-border">
+        <div className="flex border-b border-border overflow-x-auto whitespace-nowrap [scrollbar-width:none] -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
             onClick={() => setActiveTab("courses")}
-            className={`flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
+            className={`flex shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
               activeTab === "courses"
                 ? "border-indigo-600 text-indigo-600 dark:text-indigo-400"
                 : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
@@ -289,7 +290,7 @@ export default function TeacherDashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab("enrollments")}
-            className={`flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
+            className={`flex shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
               activeTab === "enrollments"
                 ? "border-indigo-600 text-indigo-600 dark:text-indigo-400"
                 : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
@@ -530,8 +531,8 @@ export default function TeacherDashboardPage() {
 
         {/* MODAL: CREATE / EDIT COURSE */}
         {courseModalOpen && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div className="w-full max-w-lg rounded-2xl bg-card border border-border shadow-2xl p-6 space-y-4">
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+            <div className="w-full max-w-lg rounded-2xl bg-card border border-border shadow-2xl p-4 sm:p-6 space-y-4 max-h-[90dvh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-border pb-3">
                 <h3 className="text-base font-bold text-foreground">
                   {editingCourseId ? "Edit Course" : "Create New Course"}
@@ -568,21 +569,11 @@ export default function TeacherDashboardPage() {
                   />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-foreground">
-                    Azure Blob Video URL (Streaming Link)
-                  </label>
-                  <input
-                    type="url"
-                    placeholder="https://mystorageaccount.blob.core.windows.net/videos/lesson.mp4"
-                    value={courseVideoUrl}
-                    onChange={(e) => setCourseVideoUrl(e.target.value)}
-                    className="w-full text-xs sm:text-sm rounded-xl border border-input bg-background text-foreground px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 font-mono"
-                  />
-                  <p className="text-[11px] text-muted-foreground">
-                    Direct streaming link from your Azure Blob Storage container.
-                  </p>
-                </div>
+                <VideoUpload
+                  value={courseVideoUrl}
+                  onChange={setCourseVideoUrl}
+                  disabled={actionLoading}
+                />
 
                 <div className="flex items-center justify-end gap-2 pt-2 border-t border-border">
                   <button

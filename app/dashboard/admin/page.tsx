@@ -23,6 +23,7 @@ import {
   AlertCircle,
   Video,
 } from "lucide-react";
+import { VideoUpload } from "@/components/video-upload";
 
 export default function AdminDashboardPage() {
   const { profile, isMockMode } = useAuth();
@@ -95,7 +96,7 @@ export default function AdminDashboardPage() {
       setEditingCourseId(null);
       setCourseTitle("");
       setCourseDesc("");
-      setCourseVideoUrl("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+      setCourseVideoUrl("");
     }
     setCourseModalOpen(true);
   };
@@ -345,10 +346,10 @@ export default function AdminDashboardPage() {
         )}
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-border">
+        <div className="flex border-b border-border overflow-x-auto whitespace-nowrap [scrollbar-width:none] -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
             onClick={() => setActiveTab("courses")}
-            className={`flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
+            className={`flex shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
               activeTab === "courses"
                 ? "border-rose-600 text-rose-600 dark:text-rose-400"
                 : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
@@ -359,7 +360,7 @@ export default function AdminDashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab("users")}
-            className={`flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
+            className={`flex shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
               activeTab === "users"
                 ? "border-rose-600 text-rose-600 dark:text-rose-400"
                 : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
@@ -370,7 +371,7 @@ export default function AdminDashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab("enrollments")}
-            className={`flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
+            className={`flex shrink-0 items-center gap-2 px-4 sm:px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
               activeTab === "enrollments"
                 ? "border-rose-600 text-rose-600 dark:text-rose-400"
                 : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
@@ -707,8 +708,8 @@ export default function AdminDashboardPage() {
 
         {/* MODAL: ADD / EDIT COURSE */}
         {courseModalOpen && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div className="w-full max-w-lg rounded-2xl bg-card border border-border shadow-2xl p-6 space-y-4">
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+            <div className="w-full max-w-lg rounded-2xl bg-card border border-border shadow-2xl p-4 sm:p-6 space-y-4 max-h-[90dvh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-border pb-3">
                 <h3 className="text-base font-bold text-foreground">
                   {editingCourseId ? "Edit Course Module" : "Create New Course Module"}
@@ -745,21 +746,11 @@ export default function AdminDashboardPage() {
                   />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-foreground">
-                    Azure Video URL (Streaming Link)
-                  </label>
-                  <input
-                    type="url"
-                    placeholder="https://mystorageaccount.blob.core.windows.net/videos/lesson1.mp4"
-                    value={courseVideoUrl}
-                    onChange={(e) => setCourseVideoUrl(e.target.value)}
-                    className="w-full text-xs sm:text-sm rounded-xl border border-input bg-background text-foreground px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-rose-500 font-mono"
-                  />
-                  <p className="text-[11px] text-muted-foreground">
-                    Stored as text in PostgreSQL courses table. Streamed directly via HTML5 video player.
-                  </p>
-                </div>
+                <VideoUpload
+                  value={courseVideoUrl}
+                  onChange={setCourseVideoUrl}
+                  disabled={actionLoading}
+                />
 
                 <div className="flex items-center justify-end gap-2 pt-2 border-t border-border">
                   <button
@@ -785,8 +776,8 @@ export default function AdminDashboardPage() {
 
         {/* MODAL: ADD USER PROFILE */}
         {userModalOpen && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div className="w-full max-w-md rounded-2xl bg-card border border-border shadow-2xl p-6 space-y-4">
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+            <div className="w-full max-w-md rounded-2xl bg-card border border-border shadow-2xl p-4 sm:p-6 space-y-4 max-h-[90dvh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-border pb-3">
                 <h3 className="text-base font-bold text-foreground">Add User Profile</h3>
                 <button
