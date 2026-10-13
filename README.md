@@ -1,4 +1,5 @@
 # SmartLMS
+<img width="1536" height="657" alt="image" src="https://github.com/user-attachments/assets/924a89bc-9cd2-4857-bb91-189c5cf1b3b7" />
 
 ## A simpler way to deliver learning
 
