@@ -43,12 +43,12 @@ export async function POST(req: NextRequest) {
       container: AZURE_CONFIG.containerName,
       account: AZURE_CONFIG.accountName,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[API Upload Error]:", error);
     return NextResponse.json(
       {
         success: false,
-        error: error?.message || "Failed to process upload.",
+        error: error instanceof Error ? error.message : "Failed to process upload.",
       },
       { status: 500 }
     );
